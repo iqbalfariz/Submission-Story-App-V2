@@ -30,7 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SubmissionStoryApp" >
         <activity
-            android:name=".view.SplashScreenActivity"
+            android:name=".view.splashscreen.SplashScreenActivity"
             android:exported="true">
 
             <intent-filter>

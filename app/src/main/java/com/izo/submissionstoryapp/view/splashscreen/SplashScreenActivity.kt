@@ -1,11 +1,10 @@
-package com.izo.submissionstoryapp.view
+package com.izo.submissionstoryapp.view.splashscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.izo.submissionstoryapp.R
-import com.izo.submissionstoryapp.view.home.MainActivity
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -7,4 +7,6 @@
     <string name="description">Description</string>
     <string name="nama">Nama</string>
     <string name="deskripsi">Deskripsi</string>
+    <string name="selamat_datang_di_dicoding_story_app">Selamat datang di Dicoding Story App</string>
+    <string name="share_cerita_coding_mu_dengan_teman_teman_dicoding_lainnya">Share cerita coding mu dengan teman - teman Dicoding lainnya</string>
 </resources>
