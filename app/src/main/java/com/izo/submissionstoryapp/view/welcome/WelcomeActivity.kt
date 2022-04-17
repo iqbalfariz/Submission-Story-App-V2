@@ -2,22 +2,14 @@ package com.izo.submissionstoryapp.view.welcome
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
-import com.izo.submissionstoryapp.data.local.UserPreference
+import androidx.appcompat.app.AppCompatActivity
 import com.izo.submissionstoryapp.databinding.ActivityWelcomeBinding
-import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.main.MainActivity
 import com.izo.submissionstoryapp.view.login.LoginActivity
 import com.izo.submissionstoryapp.view.register.RegisterActivity
 
@@ -66,10 +58,14 @@ class WelcomeActivity : AppCompatActivity() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val login = ObjectAnimator.ofFloat(welcomeBinding.btnLogin, View.ALPHA, 1f).setDuration(1000)
-        val signup = ObjectAnimator.ofFloat(welcomeBinding.btnSignUp, View.ALPHA, 1f).setDuration(1000)
-        val welcome1 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome, View.ALPHA, 1f).setDuration(1000)
-        val welcome2 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome2, View.ALPHA, 1f).setDuration(1000)
+        val login =
+            ObjectAnimator.ofFloat(welcomeBinding.btnLogin, View.ALPHA, 1f).setDuration(1000)
+        val signup =
+            ObjectAnimator.ofFloat(welcomeBinding.btnSignUp, View.ALPHA, 1f).setDuration(1000)
+        val welcome1 =
+            ObjectAnimator.ofFloat(welcomeBinding.tvWelcome, View.ALPHA, 1f).setDuration(1000)
+        val welcome2 =
+            ObjectAnimator.ofFloat(welcomeBinding.tvWelcome2, View.ALPHA, 1f).setDuration(1000)
 
         val together = AnimatorSet().apply {
             playTogether(login, signup)

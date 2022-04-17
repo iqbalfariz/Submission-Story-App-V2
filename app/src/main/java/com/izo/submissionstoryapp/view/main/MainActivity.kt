@@ -2,11 +2,11 @@ package com.izo.submissionstoryapp.view.main
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         mainViewModel.getUser().observe(this) { user ->
-                var auth = "Bearer ${user.token}"
-                setUpStories(auth)
+            val auth = "Bearer ${user.token}"
+            setUpStories(auth)
         }
 
         mainViewModel.isLoading.observe(this) {
@@ -57,11 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpStories(auth: String) {
-        mainViewModel.getStories(auth).observe(this, { listStory ->
+    private fun setUpStories(auth: String) =
+        mainViewModel.getStories(auth).observe(this) { listStory ->
             setUpRv(listStory)
-        })
-    }
+        }
 
     private fun setUpRv(listStory: List<ListStoryItem>) {
         val homeAdapter = MainAdapter(listStory)
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLoading(isLoading: Boolean){
+    private fun showLoading(isLoading: Boolean) {
         mainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 

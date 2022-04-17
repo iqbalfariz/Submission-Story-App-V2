@@ -1,11 +1,9 @@
 package com.izo.submissionstoryapp.view.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.izo.submissionstoryapp.R
 import com.izo.submissionstoryapp.data.ListStoryItem
 import com.izo.submissionstoryapp.databinding.ActivityDetailBinding
 

@@ -3,24 +3,18 @@ package com.izo.submissionstoryapp.view.register
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.izo.submissionstoryapp.data.RegisterResponse
-import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityRegisterBinding
-import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.login.LoginActivity
-import com.izo.submissionstoryapp.view.login.LoginViewModel
-import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,9 +32,11 @@ class RegisterActivity : AppCompatActivity() {
 
 
         registerBinding.btnSignUp.setOnClickListener { view ->
-            postDataRegis(registerBinding.edName.text.toString(),
+            postDataRegis(
+                registerBinding.edName.text.toString(),
                 registerBinding.edEmail.text.toString(),
-                registerBinding.edPassword.text.toString())
+                registerBinding.edPassword.text.toString()
+            )
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
@@ -68,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun postDataRegis(name: String, email: String, password: String) {
         showLoading(true)
         val client = ApiConfig.getApiService().postRegis(name, email, password)
-        client.enqueue(object : Callback<RegisterResponse>{
+        client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
                 response: Response<RegisterResponse>

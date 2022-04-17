@@ -21,7 +21,7 @@
             android:id="@+id/iv_photo"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:contentDescription="Foto_user"
+            android:contentDescription="@string/foto_user"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"

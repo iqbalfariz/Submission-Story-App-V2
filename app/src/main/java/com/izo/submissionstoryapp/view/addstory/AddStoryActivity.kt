@@ -7,13 +7,12 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -25,7 +24,6 @@ import com.izo.submissionstoryapp.data.RegisterResponse
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityAddStoryBinding
-import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
@@ -83,7 +81,7 @@ class AddStoryActivity : AppCompatActivity() {
         )[AddStoryViewModel::class.java]
 
         addStoryViewModel.getUser().observe(this) { user ->
-                auth = "Bearer ${user.token}"
+            auth = "Bearer ${user.token}"
         }
 
         if (!allPermissionsGranted()) {
@@ -128,17 +126,27 @@ class AddStoryActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null && !responseBody.error) {
-                            Toast.makeText(this@AddStoryActivity, responseBody.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddStoryActivity,
+                                responseBody.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@AddStoryActivity, response.message(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@AddStoryActivity,
+                            response.message(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
+
                 override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                    Toast.makeText(this@AddStoryActivity, "Gagal upload image", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddStoryActivity, "Gagal upload image", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
 
@@ -188,6 +196,7 @@ class AddStoryActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }

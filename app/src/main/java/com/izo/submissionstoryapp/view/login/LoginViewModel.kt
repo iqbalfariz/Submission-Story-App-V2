@@ -6,16 +6,13 @@ import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.data.local.UserPreference
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val pref: UserPreference): ViewModel() {
+class LoginViewModel(private val pref: UserPreference) : ViewModel() {
 
     fun loginUser(user: UserModel) {
         viewModelScope.launch {
             pref.loginUser(user)
         }
     }
-
-
-
 
 
 }

@@ -13,30 +13,17 @@ import com.izo.submissionstoryapp.databinding.ItemRowRvBinding
 import com.izo.submissionstoryapp.view.detail.DetailActivity
 import com.izo.submissionstoryapp.view.detail.DetailActivity.Companion.EXTRA_DETAIL
 
-class MainAdapter(private val listStories: List<ListStoryItem>): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(private val listStories: List<ListStoryItem>) :
+    RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-//    private lateinit var onItemClickCallback: OnItemClickCallback
-//
-//    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-//        this.onItemClickCallback = onItemClickCallback
-//    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
-        val binding = ItemRowRvBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        val binding =
+            ItemRowRvBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MainAdapter.ViewHolder, position: Int) {
-//        val data = listStories[position]
-//        Glide.with(holder.itemView.context)
-//            .load(data.photoUrl)
-//            .into(holder.binding.ivPhoto)
-//
-//        holder.binding.tvName.text = data.name
-
-//        holder.itemView.setOnClickListener {
-//            onItemClickCallback.onItemClicked(listStories[holder.adapterPosition])
-//        }
         holder.bind(listStories[position])
 
     }
@@ -69,8 +56,5 @@ class MainAdapter(private val listStories: List<ListStoryItem>): RecyclerView.Ad
         }
     }
 
-//    interface OnItemClickCallback {
-//        fun onItemClicked(data: ListStoryItem)
-//    }
 }
 

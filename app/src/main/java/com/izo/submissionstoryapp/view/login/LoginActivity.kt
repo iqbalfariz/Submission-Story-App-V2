@@ -3,7 +3,6 @@ package com.izo.submissionstoryapp.view.login
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var user: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun postDataLogin(email: String, password: String) {
         showLoading(true)
-        val client = ApiConfig.getApiService().postLogin( email, password)
+        val client = ApiConfig.getApiService().postLogin(email, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
@@ -108,7 +107,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setDataLogin(loginResult: LoginResult) {
-        loginViewModel.loginUser(UserModel(loginResult.name, loginResult.userId, loginResult.token, true))
+        loginViewModel.loginUser(
+            UserModel(
+                loginResult.name,
+                loginResult.userId,
+                loginResult.token,
+                true
+            )
+        )
     }
 
     private fun showLoading(isLoading: Boolean) {

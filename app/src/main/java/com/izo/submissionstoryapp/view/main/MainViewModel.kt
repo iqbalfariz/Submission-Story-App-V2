@@ -12,12 +12,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(private val pref: UserPreference): ViewModel() {
+class MainViewModel(private val pref: UserPreference) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getUser(): LiveData<UserModel>{
+    fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
 
@@ -45,6 +45,7 @@ class MainViewModel(private val pref: UserPreference): ViewModel() {
                     Log.e(MainActivity.TAG, "onFailure1: ${response.message()}")
                 }
             }
+
             override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(MainActivity.TAG, "onFailure2: ${t.message}")

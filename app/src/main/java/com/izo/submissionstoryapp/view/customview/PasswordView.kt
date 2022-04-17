@@ -17,14 +17,16 @@ class PasswordView : AppCompatEditText {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                s?.apply {
+                s.apply {
                     if (this.length > 6)
                         error = null
                     else
                         error = "Masukkan password diatas 6 char"
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
                 // Do nothing.
             }
@@ -35,10 +37,16 @@ class PasswordView : AppCompatEditText {
     constructor(context: Context) : super(context) {
         init()
     }
+
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
     }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 

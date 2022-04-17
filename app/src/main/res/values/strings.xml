@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Submission Story App</string>
-    <string name="greeting">Halo %1$s,</string>
     <string name="upload">Upload</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
-    <string name="description">Description</string>
     <string name="nama">Nama</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="selamat_datang_di_dicoding_story_app">Selamat datang di Dicoding Story App</string>
@@ -16,4 +14,16 @@
     <string name="preview_image">preview image</string>
     <string name="foto_detail">foto detail</string>
     <string name="button_ke_add_story">button ke add story</string>
+    <string name="logo_dicoding">logo dicoding</string>
+    <string name="illustration">illustration</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="masukkan_nama">Masukkan nama</string>
+    <string name="dicoding_story_app">Dicoding Story App</string>
+    <string name="share_your_coding_story">Share Your Coding Story</string>
+    <string name="foto_user">Foto User</string>
+    <string name="logout">logout</string>
 </resources>

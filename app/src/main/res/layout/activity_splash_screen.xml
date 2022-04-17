@@ -13,7 +13,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_dicoding" />
+        app:srcCompat="@drawable/logo_dicoding"
+        android:contentDescription="@string/logo_dicoding"
+        />
 
     <TextView
         android:id="@+id/textView"
@@ -21,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
         android:layout_marginTop="32dp"
-        android:text="Dicoding Story App"
+        android:text="@string/dicoding_story_app"
         android:textSize="24sp"
         android:maxLines="2"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
         android:layout_marginTop="24dp"
-        android:text="Share Your Coding Story"
+        android:text="@string/share_your_coding_story"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
