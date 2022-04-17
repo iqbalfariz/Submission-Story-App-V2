@@ -67,18 +67,6 @@ class MainActivity : AppCompatActivity() {
         mainBinding.rvUser.addItemDecoration(itemDecoration)
         mainBinding.rvUser.setHasFixedSize(true)
 
-//        homeAdapter.setOnItemClickCallback(object : MainAdapter.OnItemClickCallback {
-//            override fun onItemClicked(data: ListStoryItem) {
-//                val shareData = DetailModel (
-//                    data.name,
-//                    data.photoUrl,
-//                    data.description
-//                    )
-//                val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-//                intentToDetail.putExtra(DetailActivity.EXTRA_DETAIL, shareData)
-//                startActivity(intentToDetail)
-//            }
-//        })
     }
 
 
