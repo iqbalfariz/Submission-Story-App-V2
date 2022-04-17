@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Submission Story App</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+    <string name="nama">Nama</string>
+    <string name="deskripsi">Deskripsi</string>
+</resources>
