@@ -14,6 +14,9 @@ import retrofit2.Response
 
 class MainViewModel(private val pref: UserPreference): ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getUser(): LiveData<UserModel>{
         return pref.getUser().asLiveData()
     }
@@ -25,6 +28,7 @@ class MainViewModel(private val pref: UserPreference): ViewModel() {
     }
 
     fun getStories(auth: String): LiveData<List<ListStoryItem>> {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getStories(auth)
         val listStory = MutableLiveData<List<ListStoryItem>>()
         client.enqueue(object : Callback<StoriesResponse> {
@@ -34,12 +38,15 @@ class MainViewModel(private val pref: UserPreference): ViewModel() {
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
+                    _isLoading.value = false
                     listStory.value = responseBody.listStory
                 } else {
+                    _isLoading.value = false
                     Log.e(MainActivity.TAG, "onFailure1: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
+                _isLoading.value = false
                 Log.e(MainActivity.TAG, "onFailure2: ${t.message}")
             }
 

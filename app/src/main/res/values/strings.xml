@@ -13,4 +13,7 @@
     <string name="sudah_punya_akun">Sudah punya akun ?</string>
     <string name="belum_punya_akun">Belum punya akun ?</string>
     <string name="masukkan_deskripsi_foto">Masukkan deskripsi foto</string>
+    <string name="preview_image">preview image</string>
+    <string name="foto_detail">foto detail</string>
+    <string name="button_ke_add_story">button ke add story</string>
 </resources>

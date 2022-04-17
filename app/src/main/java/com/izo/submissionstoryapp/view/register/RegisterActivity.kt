@@ -12,10 +12,14 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.izo.submissionstoryapp.data.RegisterResponse
+import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityRegisterBinding
+import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.login.LoginActivity
+import com.izo.submissionstoryapp.view.login.LoginViewModel
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,12 +36,11 @@ class RegisterActivity : AppCompatActivity() {
 
         setUpView()
 
+
         registerBinding.btnSignUp.setOnClickListener { view ->
-            postDataRegis(
-                registerBinding.edName.text.toString(),
+            postDataRegis(registerBinding.edName.text.toString(),
                 registerBinding.edEmail.text.toString(),
-                registerBinding.edPassword.text.toString()
-            )
+                registerBinding.edPassword.text.toString())
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }

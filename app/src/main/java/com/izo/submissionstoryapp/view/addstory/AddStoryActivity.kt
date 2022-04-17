@@ -106,13 +106,11 @@ class AddStoryActivity : AppCompatActivity() {
             val descriptionText = addStoryBinding.edDesc.text.toString()
             uploadImage(descriptionText)
         }
-
     }
 
     private fun uploadImage(text: String) {
         if (getFile != null) {
             val file = getFile as File
-
             val description = text.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
