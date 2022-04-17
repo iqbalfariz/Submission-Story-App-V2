@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
+        supportActionBar?.title = "Dicoding Story App"
 
         mainViewModel = ViewModelProvider(
             this,
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         mainBinding.fabAddStory.setOnClickListener {
             val intent = Intent(this, AddStoryActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
 

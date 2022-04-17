@@ -12,4 +12,5 @@
     <string name="register">Register</string>
     <string name="sudah_punya_akun">Sudah punya akun ?</string>
     <string name="belum_punya_akun">Belum punya akun ?</string>
+    <string name="masukkan_deskripsi_foto">Masukkan deskripsi foto</string>
 </resources>

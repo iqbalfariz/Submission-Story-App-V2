@@ -2,6 +2,7 @@ package com.izo.submissionstoryapp.view.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import com.bumptech.glide.Glide
 import com.izo.submissionstoryapp.R
@@ -17,6 +18,9 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         detailBinding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailBinding.root)
+        supportActionBar?.elevation = 0f
+        supportActionBar?.title = "Detail User"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val detail = intent.getParcelableExtra<ListStoryItem>(EXTRA_DETAIL) as ListStoryItem
         Glide.with(this)
@@ -26,6 +30,13 @@ class DetailActivity : AppCompatActivity() {
         detailBinding.tvName.text = detail.name
         detailBinding.tvDeskripsi.text = detail.description
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

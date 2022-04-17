@@ -10,6 +10,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -71,6 +73,9 @@ class AddStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         addStoryBinding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(addStoryBinding.root)
+        supportActionBar?.elevation = 0f
+        supportActionBar?.title = "Add Story"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         addStoryViewModel = ViewModelProvider(
             this,
@@ -78,13 +83,7 @@ class AddStoryActivity : AppCompatActivity() {
         )[AddStoryViewModel::class.java]
 
         addStoryViewModel.getUser().observe(this) { user ->
-            if (user.isLogin) {
-                Toast.makeText(this, "Hello ${user.name}", Toast.LENGTH_SHORT).show()
                 auth = "Bearer ${user.token}"
-            } else {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            }
         }
 
         if (!allPermissionsGranted()) {
@@ -134,6 +133,7 @@ class AddStoryActivity : AppCompatActivity() {
                             Toast.makeText(this@AddStoryActivity, responseBody.message, Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     } else {
                         Toast.makeText(this@AddStoryActivity, response.message(), Toast.LENGTH_SHORT).show()
@@ -192,6 +192,13 @@ class AddStoryActivity : AppCompatActivity() {
     }
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
