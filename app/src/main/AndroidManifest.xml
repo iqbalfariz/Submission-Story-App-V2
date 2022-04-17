@@ -47,7 +47,7 @@
             android:name=".view.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".view.home.MainActivity"
+            android:name=".view.main.MainActivity"
             android:exported="false" >
         </activity>
         <activity

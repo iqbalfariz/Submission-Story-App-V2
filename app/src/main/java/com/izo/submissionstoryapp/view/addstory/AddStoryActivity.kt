@@ -25,7 +25,7 @@ import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityAddStoryBinding
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.home.MainActivity
+import com.izo.submissionstoryapp.view.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

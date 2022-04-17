@@ -4,9 +4,12 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -14,33 +17,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.databinding.ActivityWelcomeBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.home.MainActivity
+import com.izo.submissionstoryapp.view.main.MainActivity
 import com.izo.submissionstoryapp.view.login.LoginActivity
 import com.izo.submissionstoryapp.view.register.RegisterActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var welcomeBinding: ActivityWelcomeBinding
-    private lateinit var welcomeViewModel: WelcomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         welcomeBinding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(welcomeBinding.root)
 
-        welcomeViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[WelcomeViewModel::class.java]
-
-//        welcomeViewModel.getUser().observe(this) { user ->
-//            if (user.isLogin) {
-//                startActivity(Intent(this, MainActivity::class.java))
-//                finish()
-//            }
-//        }
+        setUpView()
 
         welcomeBinding.btnSignUp.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -55,6 +46,19 @@ class WelcomeActivity : AppCompatActivity() {
         playAnimation()
     }
 
+    private fun setUpView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
+    }
+
     private fun playAnimation() {
         ObjectAnimator.ofFloat(welcomeBinding.imageView2, View.TRANSLATION_X, -30f, 30f).apply {
             duration = 6000
@@ -62,10 +66,10 @@ class WelcomeActivity : AppCompatActivity() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val login = ObjectAnimator.ofFloat(welcomeBinding.btnLogin, View.ALPHA, 1f).setDuration(2000)
-        val signup = ObjectAnimator.ofFloat(welcomeBinding.btnSignUp, View.ALPHA, 1f).setDuration(2000)
-        val welcome1 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome, View.ALPHA, 1f).setDuration(2000)
-        val welcome2 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome2, View.ALPHA, 1f).setDuration(2000)
+        val login = ObjectAnimator.ofFloat(welcomeBinding.btnLogin, View.ALPHA, 1f).setDuration(1000)
+        val signup = ObjectAnimator.ofFloat(welcomeBinding.btnSignUp, View.ALPHA, 1f).setDuration(1000)
+        val welcome1 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome, View.ALPHA, 1f).setDuration(1000)
+        val welcome2 = ObjectAnimator.ofFloat(welcomeBinding.tvWelcome2, View.ALPHA, 1f).setDuration(1000)
 
         val together = AnimatorSet().apply {
             playTogether(login, signup)

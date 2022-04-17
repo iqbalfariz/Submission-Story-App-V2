@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.home
+package com.izo.submissionstoryapp.view.main
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -15,13 +14,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izo.submissionstoryapp.R
 import com.izo.submissionstoryapp.data.ListStoryItem
-import com.izo.submissionstoryapp.data.local.DetailModel
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.databinding.ActivityMainBinding
-import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.addstory.AddStoryActivity
-import com.izo.submissionstoryapp.view.detail.DetailActivity
+import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -93,6 +90,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         mainViewModel.logout()
+        val moveToWelcome = Intent(this, WelcomeActivity::class.java)
+        startActivity(moveToWelcome)
+        finish()
         return super.onOptionsItemSelected(item)
     }
 
