@@ -94,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 } else {
+                    Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "onFailure1: ${response.message()}")
                 }
             }

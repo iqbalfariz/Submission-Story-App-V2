@@ -23,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var registerBinding: ActivityRegisterBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -31,12 +32,14 @@ class RegisterActivity : AppCompatActivity() {
         setUpView()
 
 
+
         registerBinding.btnSignUp.setOnClickListener { view ->
             postDataRegis(
                 registerBinding.edName.text.toString(),
                 registerBinding.edEmail.text.toString(),
                 registerBinding.edPassword.text.toString()
             )
+
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
@@ -72,8 +75,15 @@ class RegisterActivity : AppCompatActivity() {
                 showLoading(false)
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
-                    Toast.makeText(this@RegisterActivity, "user created", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@RegisterActivity, responseBody.message, Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                 } else {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Email is already taken",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Log.e(TAG, "onFailure1: ${response.message()}")
                 }
             }
