@@ -38,5 +38,11 @@ interface ApiService {
         @Part("description") description: RequestBody,
     ): Call<RegisterResponse>
 
+    @GET("stories")
+    fun getLocStories(
+        @Header("AUTHORIZATION") value: String,
+        @Query("location") loc: Int
+    ): Call<StoriesResponse>
+
 
 }
