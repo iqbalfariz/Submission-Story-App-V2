@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,14 +37,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import com.izo.submissionstoryapp.data.Result
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class AddStoryActivity : AppCompatActivity() {
 
     private lateinit var addStoryBinding: ActivityAddStoryBinding
     private var getFile: File? = null
-    private lateinit var addStoryViewModel: AddStoryViewModel
     private var auth = "token"
     private lateinit var currentPhotoPath: String
     private val launcherIntentCamera = registerForActivityResult(
@@ -75,12 +76,21 @@ class AddStoryActivity : AppCompatActivity() {
         supportActionBar?.title = "Add Story"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        addStoryViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[AddStoryViewModel::class.java]
+//        addStoryViewModel = ViewModelProvider(
+//            this,
+//            ViewModelFactory(UserPreference.getInstance(dataStore))
+//        )[AddStoryViewModel::class.java]
+//
+//        addStoryViewModel.getUser().observe(this) { user ->
+//            auth = "Bearer ${user.token}"
+//        }
 
-        addStoryViewModel.getUser().observe(this) { user ->
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val addStoryViewModel: AddStoryViewModel by viewModels {
+            factory
+        }
+
+        addStoryViewModel.getUser().observe(this) {user ->
             auth = "Bearer ${user.token}"
         }
 
@@ -102,58 +112,84 @@ class AddStoryActivity : AppCompatActivity() {
 
         addStoryBinding.btnUpload.setOnClickListener {
             val descriptionText = addStoryBinding.edDesc.text.toString()
-            uploadImage(descriptionText)
-        }
-    }
-
-    private fun uploadImage(text: String) {
-        if (getFile != null) {
-            val file = getFile as File
-            val description = text.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
-                requestImageFile
-            )
-
-            val service = ApiConfig.getApiService().addStories(auth, imageMultipart, description)
-            service.enqueue(object : Callback<RegisterResponse> {
-                override fun onResponse(
-                    call: Call<RegisterResponse>,
-                    response: Response<RegisterResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        if (responseBody != null && !responseBody.error) {
-                            Toast.makeText(
-                                this@AddStoryActivity,
-                                responseBody.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+            if (getFile != null) {
+                val file = reduceFileImage(getFile as File)
+                addStoryViewModel.uploadImage(auth, descriptionText, file).observe(this) {result ->
+                    if (result != null) {
+                        when (result) {
+                            is Result.Loading -> {
+                                showLoading(true)
+                            }
+                            is Result.Success -> {
+                                showLoading(false)
+                                Toast.makeText(this, result.data.message, Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, MainActivity::class.java))
+                            }
+                            is Result.Error -> {
+                                showLoading(false)
+                                Toast.makeText(
+                                    this,
+                                    "Terjadi kesalahan" + result.error,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    } else {
-                        Toast.makeText(
-                            this@AddStoryActivity,
-                            response.message(),
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
-
-                override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                    Toast.makeText(this@AddStoryActivity, "Gagal upload image", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-
-        } else {
-            Toast.makeText(this, "Silakan pilih gambar dahulu", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Silakan pilih gambar dahulu", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
+//    private fun uploadImage(text: String) {
+//        if (getFile != null) {
+//            val file = getFile as File
+//            val description = text.toRequestBody("text/plain".toMediaType())
+//            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+//            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+//                "photo",
+//                file.name,
+//                requestImageFile
+//            )
+//
+//            val service = ApiConfig.getApiService().addStories(auth, imageMultipart, description)
+//            service.enqueue(object : Callback<RegisterResponse> {
+//                override fun onResponse(
+//                    call: Call<RegisterResponse>,
+//                    response: Response<RegisterResponse>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        val responseBody = response.body()
+//                        if (responseBody != null && !responseBody.error) {
+//                            Toast.makeText(
+//                                this@AddStoryActivity,
+//                                responseBody.message,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
+//                        }
+//                    } else {
+//                        Toast.makeText(
+//                            this@AddStoryActivity,
+//                            response.message(),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                    Toast.makeText(this@AddStoryActivity, "Gagal upload image", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            })
+//
+//        } else {
+//            Toast.makeText(this, "Silakan pilih gambar dahulu", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     private fun startGalery() {
         val intent = Intent()
@@ -208,6 +244,9 @@ class AddStoryActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        addStoryBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)

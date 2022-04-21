@@ -3,13 +3,16 @@ package com.izo.submissionstoryapp.view.addstory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.izo.submissionstoryapp.data.StoryRepository
 import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.data.local.UserPreference
+import kotlinx.coroutines.launch
+import java.io.File
 
-class AddStoryViewModel(private val pref: UserPreference) : ViewModel() {
+class AddStoryViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
-    fun getUser(): LiveData<UserModel> {
-        return pref.getUser().asLiveData()
-    }
+    fun getUser() = storyRepository.getUser().asLiveData()
 
+    fun uploadImage(auth: String, text: String, file: File) = storyRepository.uploadImage(auth, text, file)
 }

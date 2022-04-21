@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -15,18 +17,23 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izo.submissionstoryapp.R
 import com.izo.submissionstoryapp.data.ListStoryItem
+import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.databinding.ActivityMainBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.addstory.AddStoryActivity
+import com.izo.submissionstoryapp.view.login.LoginViewModel
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var mainBinding: ActivityMainBinding
+    val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    val mainViewModel: MainViewModel by viewModels {
+        factory
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +42,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
         supportActionBar?.title = "Dicoding Story App"
 
-        mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[MainViewModel::class.java]
-
         mainViewModel.getUser().observe(this) { user ->
             val auth = "Bearer ${user.token}"
             setUpStories(auth)
-        }
-
-        mainViewModel.isLoading.observe(this) {
-            showLoading(it)
         }
 
         mainBinding.fabAddStory.setOnClickListener {
@@ -58,8 +56,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpStories(auth: String) =
-        mainViewModel.getStories(auth).observe(this) { listStory ->
-            setUpRv(listStory)
+        mainViewModel.getStories(auth).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        setUpRv(result.data)
+//                        Toast.makeText(this, "Data tidak berhasil dimuat", Toast.LENGTH_SHORT).show()
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        Toast.makeText(
+                            this,
+                            "Terjadi kesalahan" + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
         }
 
     private fun setUpRv(listStory: List<ListStoryItem>) {

@@ -10,11 +10,15 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.izo.submissionstoryapp.data.RegisterResponse
+import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityRegisterBinding
+import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.login.LoginActivity
+import com.izo.submissionstoryapp.view.main.MainViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +26,10 @@ import retrofit2.Response
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var registerBinding: ActivityRegisterBinding
-
+    val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    val registerViewModel: RegisterViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,14 +38,39 @@ class RegisterActivity : AppCompatActivity() {
 
         setUpView()
 
-
-
         registerBinding.btnSignUp.setOnClickListener { view ->
-            postDataRegis(
+//            postDataRegis(
+//                registerBinding.edName.text.toString(),
+//                registerBinding.edEmail.text.toString(),
+//                registerBinding.edPassword.text.toString()
+//            )
+
+            registerViewModel.postDataRegis(
                 registerBinding.edName.text.toString(),
                 registerBinding.edEmail.text.toString(),
                 registerBinding.edPassword.text.toString()
-            )
+            ).observe(this) {result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            showLoading(true)
+                        }
+                        is Result.Success -> {
+                            showLoading(false)
+                            Toast.makeText(this, result.data.message, Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                        }
+                        is Result.Error -> {
+                            showLoading(false)
+                            Toast.makeText(
+                                this,
+                                "Terjadi kesalahan" + result.error,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
 
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -64,37 +96,37 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun postDataRegis(name: String, email: String, password: String) {
-        showLoading(true)
-        val client = ApiConfig.getApiService().postRegis(name, email, password)
-        client.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                showLoading(false)
-                val responseBody = response.body()
-                if (response.isSuccessful && responseBody != null) {
-                    Toast.makeText(this@RegisterActivity, responseBody.message, Toast.LENGTH_SHORT)
-                        .show()
-                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-                } else {
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Email is already taken",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.e(TAG, "onFailure1: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure2: ${t.message}")
-            }
-
-        })
-    }
+//    private fun postDataRegis(name: String, email: String, password: String) {
+//        showLoading(true)
+//        val client = ApiConfig.getApiService().postRegis(name, email, password)
+//        client.enqueue(object : Callback<RegisterResponse> {
+//            override fun onResponse(
+//                call: Call<RegisterResponse>,
+//                response: Response<RegisterResponse>
+//            ) {
+//                showLoading(false)
+//                val responseBody = response.body()
+//                if (response.isSuccessful && responseBody != null) {
+//                    Toast.makeText(this@RegisterActivity, responseBody.message, Toast.LENGTH_SHORT)
+//                        .show()
+//                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+//                } else {
+//                    Toast.makeText(
+//                        this@RegisterActivity,
+//                        "Email is already taken",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    Log.e(TAG, "onFailure1: ${response.message()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                showLoading(false)
+//                Log.e(TAG, "onFailure2: ${t.message}")
+//            }
+//
+//        })
+//    }
 
     private fun showLoading(isLoading: Boolean) {
         registerBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
