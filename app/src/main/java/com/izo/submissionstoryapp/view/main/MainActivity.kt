@@ -23,6 +23,7 @@ import com.izo.submissionstoryapp.databinding.ActivityMainBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.addstory.AddStoryActivity
 import com.izo.submissionstoryapp.view.login.LoginViewModel
+import com.izo.submissionstoryapp.view.maps.MapsActivity
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
 
@@ -98,10 +99,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        mainViewModel.logout()
-        val moveToWelcome = Intent(this, WelcomeActivity::class.java)
-        startActivity(moveToWelcome)
-        finish()
+        when (item.itemId) {
+            R.id.menu_maps -> {
+                val intentToMaps = Intent(this, MapsActivity::class.java)
+                startActivity(intentToMaps)
+            }
+            R.id.menu_logout -> {
+                mainViewModel.logout()
+                val moveToWelcome = Intent(this, WelcomeActivity::class.java)
+                startActivity(moveToWelcome)
+                finish()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

@@ -26,4 +26,6 @@
     <string name="share_your_coding_story">Share Your Coding Story</string>
     <string name="foto_user">Foto User</string>
     <string name="logout">logout</string>
+    <string name="maps">Maps</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
