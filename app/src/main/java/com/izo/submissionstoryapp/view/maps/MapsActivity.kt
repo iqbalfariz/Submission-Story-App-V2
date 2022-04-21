@@ -2,6 +2,9 @@ package com.izo.submissionstoryapp.view.maps
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,13 +13,20 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.izo.submissionstoryapp.R
+import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.databinding.ActivityMapsBinding
+import com.izo.submissionstoryapp.view.ViewModelFactory
+import com.izo.submissionstoryapp.view.main.MainViewModel
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mapsBinding: ActivityMapsBinding
+    val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    val mapsViewModel: MapsViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +38,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        // Get user token
+        mapsViewModel.getUser().observe(this) {user ->
+            val auth = "Bearer ${user.token}"
+            setUpMaps(auth)
+        }
+
+    }
+
+    private fun setUpMaps(auth: String) {
+        // Get user story location
+        mapsViewModel.getStories(auth, 1).observe(this) {result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Success -> {
+                        Toast.makeText(this, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                        Log.e("MapsActivity", "hasil maps : ${result.data}")
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(
+                            this,
+                            "Terjadi kesalahan" + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
     }
 
     /**

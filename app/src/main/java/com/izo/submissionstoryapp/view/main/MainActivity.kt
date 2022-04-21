@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpStories(auth: String) =
-        mainViewModel.getStories(auth).observe(this) { result ->
+        mainViewModel.getStories(auth, 0).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {

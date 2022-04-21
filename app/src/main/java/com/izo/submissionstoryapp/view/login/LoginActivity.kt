@@ -35,6 +35,7 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
+
     val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
     val loginViewModel: LoginViewModel by viewModels {
         factory
@@ -46,6 +47,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         setUpView()
+
+
 
         loginBinding.btnLogin.setOnClickListener { view ->
 //            postDataLogin(

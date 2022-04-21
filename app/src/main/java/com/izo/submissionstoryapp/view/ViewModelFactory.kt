@@ -11,6 +11,7 @@ import com.izo.submissionstoryapp.di.Injection
 import com.izo.submissionstoryapp.view.addstory.AddStoryViewModel
 import com.izo.submissionstoryapp.view.login.LoginViewModel
 import com.izo.submissionstoryapp.view.main.MainViewModel
+import com.izo.submissionstoryapp.view.maps.MapsViewModel
 import com.izo.submissionstoryapp.view.register.RegisterViewModel
 import com.izo.submissionstoryapp.view.splashscreen.SplashScreenViewModel
 
@@ -35,6 +36,9 @@ class ViewModelFactory private constructor(private val storyRepository: StoryRep
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(storyRepository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(storyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

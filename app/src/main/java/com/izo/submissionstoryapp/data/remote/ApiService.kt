@@ -27,7 +27,8 @@ interface ApiService {
 
     @GET("stories")
     fun getStories(
-        @Header("AUTHORIZATION") value: String
+        @Header("AUTHORIZATION") value: String,
+        @Query("location") loc: Int
     ): Call<StoriesResponse>
 
     @Multipart
@@ -38,11 +39,6 @@ interface ApiService {
         @Part("description") description: RequestBody,
     ): Call<RegisterResponse>
 
-    @GET("stories")
-    fun getLocStories(
-        @Header("AUTHORIZATION") value: String,
-        @Query("location") loc: Int
-    ): Call<StoriesResponse>
 
 
 }

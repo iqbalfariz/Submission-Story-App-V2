@@ -33,9 +33,9 @@ class StoryRepository private constructor(
 
 
     // get list stories
-    fun getStories(auth: String): LiveData<Result<List<ListStoryItem>>> {
+    fun getStories(auth: String, loc: Int): LiveData<Result<List<ListStoryItem>>> {
         val result = MutableLiveData<Result<List<ListStoryItem>>>()
-        val client = apiService.getStories(auth)
+        val client = apiService.getStories(auth, loc)
         result.value = Result.Loading
         client.enqueue(object : Callback<StoriesResponse> {
             override fun onResponse(
@@ -57,6 +57,8 @@ class StoryRepository private constructor(
         })
         return result
     }
+
+    // Get List
 
     // post data regis user
     fun postDataRegis(name: String, email: String, password: String):  LiveData<Result<RegisterResponse>>{

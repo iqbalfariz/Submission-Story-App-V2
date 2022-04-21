@@ -19,13 +19,25 @@ data class StoriesResponse(
 @Parcelize
 data class ListStoryItem(
 
+    @field:SerializedName("id")
+    val id: String,
+
     @field:SerializedName("photoUrl")
     val photoUrl: String,
-
 
     @field:SerializedName("name")
     val name: String,
 
     @field:SerializedName("description")
-    val description: String
+    val description: String,
+
+    @field:SerializedName("createdAt")
+    val createdAt: String,
+
+    @field:SerializedName("lat")
+    val lat: Double,
+
+    @field:SerializedName("lon")
+    val lon: Double
+
 ) : Parcelable
