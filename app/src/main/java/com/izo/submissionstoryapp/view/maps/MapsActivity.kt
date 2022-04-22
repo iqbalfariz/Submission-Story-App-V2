@@ -1,5 +1,6 @@
 package com.izo.submissionstoryapp.view.maps
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.izo.submissionstoryapp.R
 import com.izo.submissionstoryapp.data.ListStoryItem
@@ -64,6 +66,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             setUpDataSpace(auth, 1)
         }
 
+        setMapStyle()
+
+    }
+
+    private fun setMapStyle() {
+        try {
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", exception)
+        }
     }
 
     private fun setUpDataSpace(auth: String, loc: Int) {
@@ -71,8 +87,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (result != null) {
                 when (result) {
                     is Result.Success -> {
-                        Toast.makeText(this, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
-                        Log.e("MapsActivity", "hasil maps : ${result.data}")
+//                        Toast.makeText(this, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                        Log.e(TAG, "hasil maps : ${result.data}")
                         // add marker story
                         markerMaps(result.data)
                     }
@@ -90,7 +106,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun markerMaps(dataSpace: List<ListStoryItem>) {
-        Log.e("MapsActivity", "cek marker : ${dataSpace.size}")
+        Log.e(TAG, "cek marker : ${dataSpace.size}")
         val datafirst = dataSpace[0]
         val dataFirstSpace = LatLng(datafirst.lat, datafirst.lon)
         for (i in 0 until dataSpace.size) {
@@ -104,5 +120,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dataFirstSpace, 15f))
+    }
+
+    companion object {
+        const val TAG = "MapsActivity"
     }
 }
