@@ -13,16 +13,15 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.izo.submissionstoryapp.R
-import com.izo.submissionstoryapp.data.Result
+import com.izo.submissionstoryapp.data.ListStoryItem
 import com.izo.submissionstoryapp.databinding.ActivityMapsBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.main.MainViewModel
-
+import com.izo.submissionstoryapp.data.Result
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mapsBinding: ActivityMapsBinding
+    private lateinit var binding: ActivityMapsBinding
     val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
     val mapsViewModel: MapsViewModel by viewModels {
         factory
@@ -31,41 +30,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mapsBinding = ActivityMapsBinding.inflate(layoutInflater)
-        setContentView(mapsBinding.root)
+        binding = ActivityMapsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        // Get user token
-        mapsViewModel.getUser().observe(this) {user ->
-            val auth = "Bearer ${user.token}"
-            setUpMaps(auth)
-        }
-
-    }
-
-    private fun setUpMaps(auth: String) {
-        // Get user story location
-        mapsViewModel.getStories(auth, 1).observe(this) {result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Success -> {
-                        Toast.makeText(this, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
-                        Log.e("MapsActivity", "hasil maps : ${result.data}")
-                    }
-                    is Result.Error -> {
-                        Toast.makeText(
-                            this,
-                            "Terjadi kesalahan" + result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -85,9 +58,51 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        // Get user token
+        mapsViewModel.getUser().observe(this) {user ->
+            val auth = "Bearer ${user.token}"
+            setUpDataSpace(auth, 1)
+        }
+
+    }
+
+    private fun setUpDataSpace(auth: String, loc: Int) {
+        mapsViewModel.getStories(auth, loc).observe(this) {result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Success -> {
+                        Toast.makeText(this, "Data berhasil diambil", Toast.LENGTH_SHORT).show()
+                        Log.e("MapsActivity", "hasil maps : ${result.data}")
+                        // add marker story
+                        markerMaps(result.data)
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(
+                            this,
+                            "Terjadi kesalahan" + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun markerMaps(dataSpace: List<ListStoryItem>) {
+        Log.e("MapsActivity", "cek marker : ${dataSpace.size}")
+        val datafirst = dataSpace[0]
+        val dataFirstSpace = LatLng(datafirst.lat, datafirst.lon)
+        for (i in 0 until dataSpace.size) {
+            val dataNow = dataSpace[i]
+            val storySpace = LatLng(dataNow.lat, dataNow.lon)
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(storySpace)
+                    .title(dataNow.name)
+                    .snippet(dataNow.description)
+            )
+        }
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dataFirstSpace, 15f))
     }
 }

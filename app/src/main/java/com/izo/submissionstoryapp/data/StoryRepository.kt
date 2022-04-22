@@ -44,7 +44,7 @@ class StoryRepository private constructor(
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
-                    result.value = Result.Success(responseBody?.listStory)
+                    result.value = Result.Success(responseBody.listStory)
                 } else {
                     result.value = Result.Error(response.message().toString())
                 }

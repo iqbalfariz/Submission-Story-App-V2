@@ -1,6 +1,5 @@
 package com.izo.submissionstoryapp.view.main
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -9,20 +8,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izo.submissionstoryapp.R
 import com.izo.submissionstoryapp.data.ListStoryItem
 import com.izo.submissionstoryapp.data.Result
-import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.databinding.ActivityMainBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.addstory.AddStoryActivity
-import com.izo.submissionstoryapp.view.login.LoginViewModel
 import com.izo.submissionstoryapp.view.maps.MapsActivity
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
