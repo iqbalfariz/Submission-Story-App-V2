@@ -1,18 +1,15 @@
 package com.izo.submissionstoryapp.data
 
-import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.izo.submissionstoryapp.data.local.StoryDatabase
 import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.data.local.UserPreference
-import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.data.remote.ApiService
-import com.izo.submissionstoryapp.view.login.LoginActivity
-import com.izo.submissionstoryapp.view.main.MainActivity
-import com.izo.submissionstoryapp.view.register.RegisterActivity
 import com.izo.submissionstoryapp.view.utils.AppExecutors
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -62,8 +59,15 @@ class StoryRepository private constructor(
 
     // get list story use paging 3
 
-    suspend fun getStoriesPaging(auth: String): StoriesResponse {
-        return apiService.getStoriesPaging(auth, 1, 5, 1)
+   fun getStoriesPaging(auth: String): LiveData<PagingData<ListStoryItem>> {
+       return Pager(
+           config = PagingConfig(
+               pageSize = 5
+           ),
+           pagingSourceFactory = {
+               StoryPagingSource(apiService, auth)
+           }
+       ).liveData
     }
 
     // Get List

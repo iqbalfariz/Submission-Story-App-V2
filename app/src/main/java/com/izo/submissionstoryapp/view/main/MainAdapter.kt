@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.izo.submissionstoryapp.databinding.ItemRowRvBinding
 import com.izo.submissionstoryapp.view.detail.DetailActivity
 import com.izo.submissionstoryapp.view.detail.DetailActivity.Companion.EXTRA_DETAIL
 
-class MainAdapter: ListAdapter<ListStoryItem, MainAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class MainAdapter: PagingDataAdapter<ListStoryItem, MainAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemRowRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
