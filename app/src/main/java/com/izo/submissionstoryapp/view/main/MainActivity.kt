@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.getUser().observe(this) { user ->
             val auth = "Bearer ${user.token}"
+            mainBinding.rvUser.layoutManager = LinearLayoutManager(this)
             setUpStories(auth)
         }
 
@@ -49,40 +50,49 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpStories(auth: String) =
-        mainViewModel.getStories(auth, 0).observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        showLoading(true)
-                    }
-                    is Result.Success -> {
-                        showLoading(false)
-                        setUpRv(result.data)
-//                        Toast.makeText(this, "Data tidak berhasil dimuat", Toast.LENGTH_SHORT).show()
-                    }
-                    is Result.Error -> {
-                        showLoading(false)
-                        Toast.makeText(
-                            this,
-                            "Terjadi kesalahan" + result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
+    private fun setUpStories(auth: String) {
+        val adapter = MainAdapter()
+        mainBinding.rvUser.adapter = adapter
+        mainViewModel.getStoriesPaging(auth)
+        mainViewModel.story.observe(this) {
+            adapter.submitList(it)
         }
-
-    private fun setUpRv(listStory: List<ListStoryItem>) {
-        val homeAdapter = MainAdapter(listStory)
-        mainBinding.rvUser.adapter = homeAdapter
-        val layoutManager = LinearLayoutManager(this)
-        mainBinding.rvUser.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        mainBinding.rvUser.addItemDecoration(itemDecoration)
-        mainBinding.rvUser.setHasFixedSize(true)
-
     }
+
+//    private fun setUpStories(auth: String) =
+//        mainViewModel.getStories(auth, 0).observe(this) { result ->
+//            if (result != null) {
+//                when (result) {
+//                    is Result.Loading -> {
+//                        showLoading(true)
+//                    }
+//                    is Result.Success -> {
+//                        showLoading(false)
+//                        setUpRv(result.data)
+////                        Toast.makeText(this, "Data tidak berhasil dimuat", Toast.LENGTH_SHORT).show()
+//                    }
+//                    is Result.Error -> {
+//                        showLoading(false)
+//                        Toast.makeText(
+//                            this,
+//                            "Terjadi kesalahan" + result.error,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
+//        }
+
+//    private fun setUpRv(listStory: List<ListStoryItem>) {
+//        val homeAdapter = MainAdapter(listStory)
+//        mainBinding.rvUser.adapter = homeAdapter
+//        val layoutManager = LinearLayoutManager(this)
+//        mainBinding.rvUser.layoutManager = layoutManager
+//        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+//        mainBinding.rvUser.addItemDecoration(itemDecoration)
+//        mainBinding.rvUser.setHasFixedSize(true)
+//
+//    }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

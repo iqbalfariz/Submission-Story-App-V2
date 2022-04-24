@@ -1,5 +1,6 @@
 package com.izo.submissionstoryapp.data.remote
 
+import com.izo.submissionstoryapp.data.ListStoryItem
 import com.izo.submissionstoryapp.data.LoginResponse
 import com.izo.submissionstoryapp.data.RegisterResponse
 import com.izo.submissionstoryapp.data.StoriesResponse
@@ -24,6 +25,14 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<LoginResponse>
+
+    @GET("stories")
+    suspend fun getStoriesPaging(
+        @Header("AUTHORIZATION") value: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("location") loc: Int
+    ): StoriesResponse
 
     @GET("stories")
     fun getStories(

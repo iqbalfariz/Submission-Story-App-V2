@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.izo.submissionstoryapp.data.local.StoryDatabase
 import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiConfig
@@ -27,15 +28,16 @@ import java.io.File
 class StoryRepository private constructor(
     private val apiService: ApiService,
     private val appExecutors: AppExecutors,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val storyDatabase: StoryDatabase
 
 ) {
 
 
     // get list stories
-    fun getStories(auth: String, loc: Int): LiveData<Result<List<ListStoryItem>>> {
+    fun getStories(auth: String, page: Int): LiveData<Result<List<ListStoryItem>>> {
         val result = MutableLiveData<Result<List<ListStoryItem>>>()
-        val client = apiService.getStories(auth, loc)
+        val client = apiService.getStories(auth, page)
         result.value = Result.Loading
         client.enqueue(object : Callback<StoriesResponse> {
             override fun onResponse(
@@ -56,6 +58,12 @@ class StoryRepository private constructor(
 
         })
         return result
+    }
+
+    // get list story use paging 3
+
+    suspend fun getStoriesPaging(auth: String): StoriesResponse {
+        return apiService.getStoriesPaging(auth, 1, 5, 1)
     }
 
     // Get List
@@ -168,10 +176,11 @@ class StoryRepository private constructor(
         fun getInstance(
             apiService: ApiService,
             appExecutors: AppExecutors,
-            userPreference: UserPreference
+            userPreference: UserPreference,
+            storyDatabase: StoryDatabase
         ): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService, appExecutors, userPreference)
+                instance ?: StoryRepository(apiService, appExecutors, userPreference,storyDatabase)
             }.also { instance = it }
     }
 }
