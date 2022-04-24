@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpStories(auth: String) {
         val adapter = MainAdapter()
-        mainBinding.rvUser.adapter = adapter
+        mainBinding.rvUser.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter{
+                adapter.retry()
+            }
+        )
         mainViewModel.getStoriesPaging(auth).observe(this) {
             adapter.submitData(lifecycle, it)
         }
