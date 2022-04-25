@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.getUser().observe(this) { user ->
             val auth = "Bearer ${user.token}"
-            setUpStories(auth)
+            val loc = 1
+            setUpStories(auth, loc)
         }
 
         mainBinding.fabAddStory.setOnClickListener {
@@ -49,14 +50,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpStories(auth: String) {
+    private fun setUpStories(auth: String, loc: Int) {
         val adapter = MainAdapter()
         mainBinding.rvUser.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 adapter.retry()
             }
         )
-        mainViewModel.getStoriesPaging(auth).observe(this) {
+        mainViewModel.getStoriesPaging(auth, loc).observe(this) {
             adapter.submitData(lifecycle, it)
         }
     }

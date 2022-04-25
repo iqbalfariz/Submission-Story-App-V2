@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.izo.submissionstoryapp.data.remote.ApiService
 
-class StoryPagingSource(private val apiService: ApiService, private val auth: String) :
+class StoryPagingSource(private val apiService: ApiService, private val auth: String, private val loc: Int) :
     PagingSource<Int, ListStoryItem>() {
     override fun getRefreshKey(state: PagingState<Int, ListStoryItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -17,7 +17,7 @@ class StoryPagingSource(private val apiService: ApiService, private val auth: St
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val responseData =
-                apiService.getStoriesPaging(auth, position, params.loadSize, 1).listStory
+                apiService.getStoriesPaging(auth, position, params.loadSize, loc).listStory
             LoadResult.Page(
                 data = responseData,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,

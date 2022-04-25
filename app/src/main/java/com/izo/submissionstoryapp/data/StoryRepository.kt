@@ -56,16 +56,16 @@ class StoryRepository private constructor(
 
     // get list story use paging 3
 
-   fun getStoriesPaging(auth: String): LiveData<PagingData<ListStoryItem>> {
+   fun getStoriesPaging(auth: String, loc: Int): LiveData<PagingData<ListStoryItem>> {
        @OptIn(ExperimentalPagingApi::class)
        return Pager(
            config = PagingConfig(
                pageSize = 5
            ),
-           remoteMediator = StoryRemoteMediator(storyDatabase, apiService, auth),
+//           remoteMediator = StoryRemoteMediator(storyDatabase, apiService, auth, loc),
            pagingSourceFactory = {
-//               StoryPagingSource(apiService, auth)
-               storyDatabase.storyDao().getAllStory()
+               StoryPagingSource(apiService, auth, loc)
+//               storyDatabase.storyDao().getAllStory()
            }
        ).liveData
     }
@@ -98,9 +98,11 @@ class StoryRepository private constructor(
     }
 
     // Upload gambar dan desk
-    fun uploadImage(auth: String, text: String, file: File): LiveData<Result<RegisterResponse>>{
+    fun uploadImage(auth: String, text: String, file: File, latitude: Float, longitude: Float): LiveData<Result<RegisterResponse>>{
             val description = text.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val lat = latitude.toString().toRequestBody("text/plain".toMediaType())
+            val lon = longitude.toString().toRequestBody("text/plain".toMediaType())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",
                 file.name,
@@ -108,7 +110,7 @@ class StoryRepository private constructor(
             )
             val result = MutableLiveData<Result<RegisterResponse>>()
             result.value = Result.Loading
-            val service = apiService.addStories(auth, imageMultipart, description)
+            val service = apiService.addStories(auth, imageMultipart, description, lat, lon)
             service.enqueue(object : Callback<RegisterResponse> {
                 override fun onResponse(
                     call: Call<RegisterResponse>,

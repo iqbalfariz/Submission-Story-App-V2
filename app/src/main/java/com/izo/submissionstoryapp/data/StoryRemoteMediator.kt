@@ -13,7 +13,8 @@ import com.izo.submissionstoryapp.data.remote.ApiService
 class StoryRemoteMediator(
     private val database: StoryDatabase,
     private val apiService: ApiService,
-    private val auth: String
+    private val auth: String,
+    private val loc: Int
 ) : RemoteMediator<Int, ListStoryItem>() {
 
     private companion object {
@@ -46,7 +47,7 @@ class StoryRemoteMediator(
             }
         }
         return try {
-            val responseData = apiService.getStoriesPaging(auth, page, state.config.pageSize, 1).listStory
+            val responseData = apiService.getStoriesPaging(auth, page, state.config.pageSize, loc).listStory
             val endOfPaginationReached = responseData.isEmpty()
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
