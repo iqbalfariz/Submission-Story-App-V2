@@ -5,16 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.izo.submissionstoryapp.data.ListStoryItem
+import com.izo.submissionstoryapp.data.local.database.remotekeys.RemoteKeys
+import com.izo.submissionstoryapp.data.local.database.remotekeys.RemoteKeysDao
 
 
 @Database(
-    entities = [ListStoryItem::class],
-    version = 1,
+    entities = [ListStoryItem::class, RemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 abstract class StoryDatabase : RoomDatabase() {
 
     abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         @Volatile

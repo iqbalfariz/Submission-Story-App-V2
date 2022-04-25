@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     private fun setUpStories(auth: String) {

@@ -8,7 +8,7 @@ import com.izo.submissionstoryapp.data.ListStoryItem
 @Dao
 interface StoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertQuote(quote: List<ListStoryItem>)
+    suspend fun insertStory(quote: List<ListStoryItem>)
 
     @Query("SELECT * FROM story")
     fun getAllStory(): PagingSource<Int, ListStoryItem>
