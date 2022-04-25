@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.data.local
+package com.izo.submissionstoryapp.data.local.database
 
 import android.content.Context
 import androidx.room.Database
@@ -13,6 +13,8 @@ import com.izo.submissionstoryapp.data.ListStoryItem
     exportSchema = false
 )
 abstract class StoryDatabase : RoomDatabase() {
+
+    abstract fun storyDao(): StoryDao
 
     companion object {
         @Volatile

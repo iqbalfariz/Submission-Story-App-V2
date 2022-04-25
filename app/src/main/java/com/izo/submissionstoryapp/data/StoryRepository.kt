@@ -2,11 +2,8 @@ package com.izo.submissionstoryapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
-import com.izo.submissionstoryapp.data.local.StoryDatabase
+import androidx.paging.*
+import com.izo.submissionstoryapp.data.local.database.StoryDatabase
 import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiService
@@ -60,12 +57,15 @@ class StoryRepository private constructor(
     // get list story use paging 3
 
    fun getStoriesPaging(auth: String): LiveData<PagingData<ListStoryItem>> {
+       @OptIn(ExperimentalPagingApi::class)
        return Pager(
            config = PagingConfig(
                pageSize = 5
            ),
+           remoteMediator = StoryRemoteMediator(storyDatabase, apiService, auth),
            pagingSourceFactory = {
-               StoryPagingSource(apiService, auth)
+//               StoryPagingSource(apiService, auth)
+               storyDatabase.storyDao().getAllStory()
            }
        ).liveData
     }

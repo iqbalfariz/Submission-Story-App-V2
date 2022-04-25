@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.izo.submissionstoryapp.data.StoryRepository
-import com.izo.submissionstoryapp.data.local.StoryDatabase
+import com.izo.submissionstoryapp.data.local.database.StoryDatabase
 import com.izo.submissionstoryapp.data.local.UserPreference
 import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.view.utils.AppExecutors

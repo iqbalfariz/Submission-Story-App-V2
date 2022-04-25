@@ -18,8 +18,6 @@ import retrofit2.Response
 
 class MainViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
-
-
     fun getUser() = storyRepository.getUser().asLiveData()
 
     fun logout() {
@@ -27,11 +25,6 @@ class MainViewModel(private val storyRepository: StoryRepository) : ViewModel() 
             storyRepository.logout()
         }
     }
-
-
-
-
-
 
     fun getStoriesPaging(auth: String): LiveData<PagingData<ListStoryItem>> =
         storyRepository.getStoriesPaging(auth).cachedIn(viewModelScope)
