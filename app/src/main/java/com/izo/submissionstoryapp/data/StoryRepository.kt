@@ -70,7 +70,7 @@ class StoryRepository private constructor(
        ).liveData
     }
 
-    // Get List
+
 
     // post data regis user
     fun postDataRegis(name: String, email: String, password: String):  LiveData<Result<RegisterResponse>>{

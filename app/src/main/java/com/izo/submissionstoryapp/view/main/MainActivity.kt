@@ -20,7 +20,6 @@ import com.izo.submissionstoryapp.view.maps.MapsActivity
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
@@ -36,9 +35,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
         supportActionBar?.title = "Dicoding Story App"
 
+        mainBinding.rvUser.layoutManager = LinearLayoutManager(this)
+
         mainViewModel.getUser().observe(this) { user ->
             val auth = "Bearer ${user.token}"
-            mainBinding.rvUser.layoutManager = LinearLayoutManager(this)
             setUpStories(auth)
         }
 
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpStories(auth: String) {
         val adapter = MainAdapter()
         mainBinding.rvUser.adapter = adapter.withLoadStateFooter(
-            footer = LoadingStateAdapter{
+            footer = LoadingStateAdapter {
                 adapter.retry()
             }
         )
@@ -120,9 +120,9 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        mainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
+//    private fun showLoading(isLoading: Boolean) {
+//        mainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+//    }
 
     companion object {
         const val TAG = "MainActivity"
