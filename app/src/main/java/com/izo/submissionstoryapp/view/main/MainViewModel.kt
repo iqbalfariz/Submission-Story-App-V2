@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.Main
+package com.izo.submissionstoryapp.view.main
 
 import androidx.lifecycle.*
 import androidx.paging.PagingData

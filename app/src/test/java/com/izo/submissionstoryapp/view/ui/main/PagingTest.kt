@@ -9,9 +9,9 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.izo.submissionstoryapp.data.ListStoryItem
-import com.izo.submissionstoryapp.view.Main.MainAdapter
-import com.izo.submissionstoryapp.view.Main.MainViewModel
-import com.izo.submissionstoryapp.view.Main.getOrAwaitValue
+import com.izo.submissionstoryapp.view.main.MainAdapter
+import com.izo.submissionstoryapp.view.main.MainViewModel
+import com.izo.submissionstoryapp.view.main.getOrAwaitValue
 import com.izo.submissionstoryapp.view.utils.DataDummy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

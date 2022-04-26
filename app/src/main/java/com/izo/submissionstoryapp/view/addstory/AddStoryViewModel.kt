@@ -14,5 +14,5 @@ class AddStoryViewModel(private val storyRepository: StoryRepository) : ViewMode
 
     fun getUser() = storyRepository.getUser().asLiveData()
 
-    fun uploadImage(auth: String, text: String, file: File, latitude: Float, longitude: Float) = storyRepository.uploadImage(auth, text, file, latitude, longitude)
+    fun uploadStory(auth: String, text: String, file: File, latitude: Float, longitude: Float) = storyRepository.uploadStory(auth, text, file, latitude, longitude)
 }

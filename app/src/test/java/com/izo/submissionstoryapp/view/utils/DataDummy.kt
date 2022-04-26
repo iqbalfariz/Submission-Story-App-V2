@@ -61,4 +61,13 @@ object DataDummy {
                 )
         return result
     }
+
+    // Data dummy ketika user add story
+    fun generateDummyAddStory(): RegisterResponse{
+        val result = RegisterResponse (
+            false,
+            "Story created succesfully"
+        )
+        return result
+    }
 }

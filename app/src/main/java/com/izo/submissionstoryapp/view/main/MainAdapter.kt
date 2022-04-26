@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.Main
+package com.izo.submissionstoryapp.view.main
 
 import android.app.Activity
 import android.content.Intent

@@ -98,7 +98,7 @@ class StoryRepository private constructor(
     }
 
     // Upload gambar dan desk
-    fun uploadImage(auth: String, text: String, file: File, latitude: Float, longitude: Float): LiveData<Result<RegisterResponse>>{
+    fun uploadStory(auth: String, text: String, file: File, latitude: Float, longitude: Float): LiveData<Result<RegisterResponse>>{
             val description = text.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val lat = latitude.toString().toRequestBody("text/plain".toMediaType())

@@ -29,7 +29,7 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.databinding.ActivityAddStoryBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.Main.MainActivity
+import com.izo.submissionstoryapp.view.main.MainActivity
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -103,7 +103,7 @@ class AddStoryActivity : AppCompatActivity() {
             val descriptionText = addStoryBinding.edDesc.text.toString()
             if (getFile != null) {
                 val file = reduceFileImage(getFile as File)
-                addStoryViewModel.uploadImage(auth, descriptionText, file, latitude, longitude).observe(this) { result ->
+                addStoryViewModel.uploadStory(auth, descriptionText, file, latitude, longitude).observe(this) { result ->
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
