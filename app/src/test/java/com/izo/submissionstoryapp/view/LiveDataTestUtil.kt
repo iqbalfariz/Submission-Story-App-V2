@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.UnitTest
+package com.izo.submissionstoryapp.view.Main
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

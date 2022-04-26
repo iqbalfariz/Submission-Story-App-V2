@@ -16,7 +16,7 @@ import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.databinding.ActivityLoginBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.UnitTest.MainActivity
+import com.izo.submissionstoryapp.view.Main.MainActivity
 import com.izo.submissionstoryapp.view.register.RegisterActivity
 
 

@@ -11,10 +11,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoJUnitRunner
 import com.izo.submissionstoryapp.data.Result
-import com.izo.submissionstoryapp.view.UnitTest.getOrAwaitValue
+import com.izo.submissionstoryapp.view.Main.getOrAwaitValue
 import org.junit.Assert
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
