@@ -3,12 +3,16 @@ package com.izo.submissionstoryapp.view.ui.main
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.izo.submissionstoryapp.data.ListStoryItem
+import com.izo.submissionstoryapp.data.Result
+import com.izo.submissionstoryapp.data.StoryRepository
+import com.izo.submissionstoryapp.data.local.UserModel
 import com.izo.submissionstoryapp.view.UnitTest.MainAdapter
 import com.izo.submissionstoryapp.view.UnitTest.MainViewModel
 import com.izo.submissionstoryapp.view.UnitTest.getOrAwaitValue
@@ -16,16 +20,18 @@ import com.izo.submissionstoryapp.view.utils.DataDummy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class MainViewModelTest {
+class PagingTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
