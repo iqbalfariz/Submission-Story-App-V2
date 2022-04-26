@@ -1,17 +1,8 @@
-package com.izo.submissionstoryapp.view.main
+package com.izo.submissionstoryapp.view.UnitTest
 
 import androidx.annotation.VisibleForTesting
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.izo.submissionstoryapp.data.StoryRepository
-import com.izo.submissionstoryapp.view.main.utils.DataDummy
-import org.junit.Assert.*
-import org.junit.Before
-import org.junit.Rule
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException

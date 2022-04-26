@@ -29,7 +29,7 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.databinding.ActivityAddStoryBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.main.MainActivity
+import com.izo.submissionstoryapp.view.UnitTest.MainActivity
 import java.io.File
 import java.util.concurrent.TimeUnit
 

@@ -10,7 +10,7 @@ import com.izo.submissionstoryapp.data.StoryRepository
 import com.izo.submissionstoryapp.di.Injection
 import com.izo.submissionstoryapp.view.addstory.AddStoryViewModel
 import com.izo.submissionstoryapp.view.login.LoginViewModel
-import com.izo.submissionstoryapp.view.main.MainViewModel
+import com.izo.submissionstoryapp.view.UnitTest.MainViewModel
 import com.izo.submissionstoryapp.view.maps.MapsViewModel
 import com.izo.submissionstoryapp.view.register.RegisterViewModel
 import com.izo.submissionstoryapp.view.splashscreen.SplashScreenViewModel

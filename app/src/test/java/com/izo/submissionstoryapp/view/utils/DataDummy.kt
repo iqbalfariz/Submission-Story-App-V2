@@ -1,13 +1,16 @@
-package com.izo.submissionstoryapp.view.main.utils
+package com.izo.submissionstoryapp.view.utils
 
 import com.izo.submissionstoryapp.data.ListStoryItem
 
 object DataDummy {
 
-//    fun getDummyToken(): String {
-//
+    // Data dummy ketika user login
+
+//    fun generateDummyUserLogin(): UserModel {
+//        data = preferencesDataStore()
 //    }
 
+    // Data dummy response api get story
     fun generateDummyStoriesResponse(): List<ListStoryItem> {
         val items: MutableList<ListStoryItem> = arrayListOf()
         for (i in 0..100) {

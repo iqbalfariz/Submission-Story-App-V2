@@ -1,18 +1,13 @@
-package com.izo.submissionstoryapp.view.main
+package com.izo.submissionstoryapp.view.UnitTest
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izo.submissionstoryapp.R
-import com.izo.submissionstoryapp.data.ListStoryItem
-import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.databinding.ActivityMainBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.addstory.AddStoryActivity

@@ -68,7 +68,7 @@
             android:name=".view.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.UnitTest.MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.login.LoginActivity"

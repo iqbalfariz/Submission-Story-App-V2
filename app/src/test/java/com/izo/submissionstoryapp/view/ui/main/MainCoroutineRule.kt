@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.main
+package com.izo.submissionstoryapp.view.ui.main
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

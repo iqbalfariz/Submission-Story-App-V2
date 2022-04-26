@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.main
+package com.izo.submissionstoryapp.view.UnitTest
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.izo.submissionstoryapp.data.ListStoryItem

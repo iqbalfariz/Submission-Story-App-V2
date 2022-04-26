@@ -1,4 +1,4 @@
-package com.izo.submissionstoryapp.view.main
+package com.izo.submissionstoryapp.view.UnitTest
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

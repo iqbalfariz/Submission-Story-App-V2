@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -12,24 +11,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
-import com.izo.submissionstoryapp.data.LoginResponse
 import com.izo.submissionstoryapp.data.LoginResult
 import com.izo.submissionstoryapp.data.Result
 import com.izo.submissionstoryapp.data.local.UserModel
-import com.izo.submissionstoryapp.data.local.UserPreference
-import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityLoginBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.addstory.AddStoryViewModel
-import com.izo.submissionstoryapp.view.main.MainActivity
+import com.izo.submissionstoryapp.view.UnitTest.MainActivity
 import com.izo.submissionstoryapp.view.register.RegisterActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class LoginActivity : AppCompatActivity() {

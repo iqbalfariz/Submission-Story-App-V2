@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -12,16 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.izo.submissionstoryapp.data.RegisterResponse
 import com.izo.submissionstoryapp.data.Result
-import com.izo.submissionstoryapp.data.remote.ApiConfig
 import com.izo.submissionstoryapp.databinding.ActivityRegisterBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
 import com.izo.submissionstoryapp.view.login.LoginActivity
-import com.izo.submissionstoryapp.view.main.MainViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 

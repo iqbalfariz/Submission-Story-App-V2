@@ -1,6 +1,5 @@
 package com.izo.submissionstoryapp.view.splashscreen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,16 +7,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import com.izo.submissionstoryapp.R
-import com.izo.submissionstoryapp.data.local.UserPreference
-import com.izo.submissionstoryapp.databinding.ActivityRegisterBinding
 import com.izo.submissionstoryapp.view.ViewModelFactory
-import com.izo.submissionstoryapp.view.main.MainActivity
-import com.izo.submissionstoryapp.view.register.RegisterViewModel
+import com.izo.submissionstoryapp.view.UnitTest.MainActivity
 import com.izo.submissionstoryapp.view.welcome.WelcomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
