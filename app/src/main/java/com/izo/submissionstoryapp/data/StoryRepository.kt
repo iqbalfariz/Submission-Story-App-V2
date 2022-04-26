@@ -62,10 +62,10 @@ class StoryRepository private constructor(
            config = PagingConfig(
                pageSize = 5
            ),
-//           remoteMediator = StoryRemoteMediator(storyDatabase, apiService, auth, loc),
+           remoteMediator = StoryRemoteMediator(storyDatabase, apiService, auth, loc),
            pagingSourceFactory = {
                StoryPagingSource(apiService, auth, loc)
-//               storyDatabase.storyDao().getAllStory()
+               storyDatabase.storyDao().getAllStory()
            }
        ).liveData
     }
