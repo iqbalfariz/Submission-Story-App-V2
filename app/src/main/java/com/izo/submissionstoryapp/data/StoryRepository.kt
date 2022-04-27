@@ -29,9 +29,9 @@ class StoryRepository private constructor(
 
 
     // get list stories
-    fun getStories(auth: String, page: Int): LiveData<Result<List<ListStoryItem>>> {
+    fun getStories(auth: String, loc: Int): LiveData<Result<List<ListStoryItem>>> {
         val result = MutableLiveData<Result<List<ListStoryItem>>>()
-        val client = apiService.getStories(auth, page)
+        val client = apiService.getStories(auth, loc)
         result.value = Result.Loading
         client.enqueue(object : Callback<StoriesResponse> {
             override fun onResponse(
